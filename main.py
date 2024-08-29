@@ -14,5 +14,5 @@ app.include_router(blog_post.router)
 def index():
     return {'message': 'Hello World!!'}
 
-
+# creates database if it does not exist
 models.Base.metadata.create_all(engine)
