@@ -1,13 +1,15 @@
 from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.responses import JSONResponse, PlainTextResponse
-from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.middleware.cors import CORSMiddleware
 from router import blog_get, blog_post, user, article, product
+from auth import authentication
 from db import models
 from db.database import engine
 from exceptions import StoryException
 # uvicorn main:app --reload
 
 app = FastAPI()
+app.include_router(authentication.router)
 app.include_router(user.router)
 app.include_router(blog_get.router)
 app.include_router(blog_post.router)
@@ -34,12 +36,12 @@ def story_exception_handler(request: Request, exc: StoryException):
 models.Base.metadata.create_all(engine)
 
 # allows interaction with another app (react)
-origins = ['http://127.0.0.1:3000']
+# origins = ['http://127.0.0.1:3000']
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins = origins,
-    allow_credential = True,
-    allow_methods = ["*"],
-    allow_headers = ["*"]
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins = origins,
+#     allow_credential = True,
+#     allow_methods = ["*"],
+#     allow_headers = ["*"]
+# )
