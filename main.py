@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.middleware.cors import CORSMiddleware
 from router import blog_get, blog_post, user, article, product
 from db import models
 from db.database import engine
@@ -31,3 +32,14 @@ def story_exception_handler(request: Request, exc: StoryException):
 
 # creates database if it does not exist
 models.Base.metadata.create_all(engine)
+
+# allows interaction with another app (react)
+origins = ['http://127.0.0.1:3000']
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credential = True,
+    allow_methods = ["*"],
+    allow_headers = ["*"]
+)
