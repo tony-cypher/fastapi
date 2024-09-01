@@ -1,4 +1,5 @@
 from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import FileResponse
 import aiofiles
 
 
@@ -25,3 +26,8 @@ async def get_upload_file(upload_file: UploadFile=File(...)):
         'filename': path,
         'type': upload_file.content_type
     }
+
+@router.get('/dowmload/{name}', response_class=FileResponse)
+def get_file(name: str):
+    path = f"media/{name}"
+    return path
