@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.staticfiles import StaticFiles
 # from fastapi.middleware.cors import CORSMiddleware
 from router import blog_get, blog_post, user, article, product, file
 from auth import authentication
@@ -46,3 +47,5 @@ models.Base.metadata.create_all(engine)
 #     allow_methods = ["*"],
 #     allow_headers = ["*"]
 # )
+
+app.mount("/media", StaticFiles(directory='media'), name='media')
